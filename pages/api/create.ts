@@ -1,6 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 
-import got from "got";
+import fetch from "node-fetch";
 
 import { generateKey, randomString } from "./../../helpers/crypto";
 
@@ -17,25 +17,24 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 					process.env.HCAPTCHA_SECRET
 				) {
 					if (body.hcaptchaToken) {
-						const captchaResponse: any = await got.post(
+						const _captchaResponse = await fetch(
 							"https://hcaptcha.com/siteverify",
 							{
-								json: {
-									response: body.hcaptchaToken.toString(),
-									secret: process.env.HCAPTCHA_SECRET,
+								headers: {
+									"Content-Type":
+										"application/x-www-form-urlencoded",
 								},
-								responseType: "json",
+								method: "POST",
+								body: `response=${body.hcaptchaToken.toString()}&secret=${
+									process.env.HCAPTCHA_SECRET
+								}`,
 							}
 						);
-						if (captchaResponse.body.success != true) {
+						const captchaResponse = await _captchaResponse.json();
+						if (captchaResponse.success != true) {
 							res.status(400).json({
 								success: false,
 								error: "CAPTCHA_INVALID",
-								hcaptchaError: captchaResponse.body[
-									"error-codes"
-								]
-									? captchaResponse.body["error-codes"]
-									: [],
 							});
 							return;
 						}
