@@ -70,7 +70,7 @@ export class FaunaAdapter extends Adapter {
 			})
 		);
 		return {
-			id: response.ref,
+			id: response.ref.id,
 			editKey: hashedPassword,
 			slug: shortlink.slug,
 			target: shortlink.target,
