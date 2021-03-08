@@ -26,11 +26,13 @@ import "bootstrap/dist/css/bootstrap.min.css";
 
 type Props = {
 	title?: string;
+	omitTitle?: boolean;
 };
 
 const Layout: FunctionComponent<Props> = ({
 	children,
 	title = "Next Shortener",
+	omitTitle = false,
 }) => {
 	return (
 		<Fragment>
@@ -39,7 +41,7 @@ const Layout: FunctionComponent<Props> = ({
 			</Head>
 			<Container>
 				<Jumbotron>
-					{title && <h1>{title}</h1>}
+					{title && !omitTitle && <h1>{title}</h1>}
 					{children}
 				</Jumbotron>
 			</Container>

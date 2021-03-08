@@ -17,7 +17,10 @@
  */
 
 import { NextPage } from "next";
-import { useState } from "react";
+import { Fragment, useState } from "react";
+
+import AES from "crypto-js/aes";
+
 import Layout from "../components/Layout";
 
 import { getBaseURL } from "./../helpers/meta";
@@ -30,7 +33,8 @@ import Alert from "react-bootstrap/Alert";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 
-import { FaClipboard, FaClipboardCheck } from "react-icons/fa";
+import { FaClipboard, FaClipboardCheck, FaLock } from "react-icons/fa";
+import { verify } from "crypto";
 
 type Props = {
 	baseUrl: string;
@@ -41,6 +45,11 @@ const Index: NextPage<Props> = ({ baseUrl }) => {
 	const [isLoading, setIsLoading] = useState(false);
 	const [createdShortlink, setCreatedShortlink] = useState(null);
 	const [shortLinkCopied, setShortLinkCopied] = useState(false);
+	const [isEncrypted, setEncrypted] = useState(false);
+	const [encryptionPassword, setEncryptionPassword] = useState("");
+	const [verifyEncryptionPassword, setVerifyEncryptionPassword] = useState(
+		""
+	);
 
 	return (
 		<Layout title="Next Shortener">
@@ -81,18 +90,45 @@ const Index: NextPage<Props> = ({ baseUrl }) => {
 				onSubmit={async (event) => {
 					event.preventDefault();
 					setIsLoading(true);
-					const response = await fetch("/api/create", {
-						method: "POST",
-						body: JSON.stringify({
-							target: targetUrl,
-						}),
-					});
-					setIsLoading(false);
-					if (response.status === 200) {
-						const json = await response.json();
-						setCreatedShortlink(json.shortlink);
+					if (isEncrypted) {
+						if (encryptionPassword === verifyEncryptionPassword) {
+							const response = await fetch("/api/create", {
+								method: "POST",
+								body: JSON.stringify({
+									target: AES.encrypt(
+										targetUrl,
+										encryptionPassword
+									).toString(),
+									encrypted: true,
+								}),
+							});
+							setIsLoading(false);
+							if (response.status === 200) {
+								const json = await response.json();
+								setCreatedShortlink(json.shortlink);
+								setEncryptionPassword("");
+								setVerifyEncryptionPassword("");
+								setEncrypted(false);
+							} else {
+								alert(response.status);
+							}
+						} else {
+							alert("The encryption passwords do not match.");
+						}
 					} else {
-						alert(response.status);
+						const response = await fetch("/api/create", {
+							method: "POST",
+							body: JSON.stringify({
+								target: targetUrl,
+							}),
+						});
+						setIsLoading(false);
+						if (response.status === 200) {
+							const json = await response.json();
+							setCreatedShortlink(json.shortlink);
+						} else {
+							alert(response.status);
+						}
 					}
 				}}
 			>
@@ -105,9 +141,55 @@ const Index: NextPage<Props> = ({ baseUrl }) => {
 							setTargetUrl(event.target.value);
 							console.log(event.target.value);
 						}}
+						required
 					/>
 				</Form.Group>
-				<Button variant="primary" size="lg" block type="submit">
+				<Form.Group>
+					<Form.Label>
+						<FaLock /> Encrypted redirect
+					</Form.Label>
+					<Form.Check
+						type="checkbox"
+						onChange={(event) => {
+							setEncrypted(event.target.checked);
+						}}
+					/>
+				</Form.Group>
+				{isEncrypted && (
+					<Fragment>
+						<Form.Group>
+							<Form.Label>Password</Form.Label>
+							<Form.Control
+								type="password"
+								placeholder="Password"
+								required
+								onChange={(event) => {
+									setEncryptionPassword(event.target.value);
+								}}
+							/>
+						</Form.Group>
+						<Form.Group>
+							<Form.Label>Verify Password</Form.Label>
+							<Form.Control
+								type="password"
+								placeholder="Verify Password"
+								required
+								onChange={(event) => {
+									setVerifyEncryptionPassword(
+										event.target.value
+									);
+								}}
+							/>
+						</Form.Group>
+					</Fragment>
+				)}
+				<Button
+					variant="primary"
+					size="lg"
+					block
+					type="submit"
+					disabled={isLoading}
+				>
 					Save
 				</Button>
 			</Form>

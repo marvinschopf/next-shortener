@@ -41,6 +41,7 @@ export class FaunaAdapter extends Adapter {
 			slug: response.data.slug,
 			target: response.data.target,
 			editKey: response.data.editKey,
+			encrypted: response.data.encrypted,
 		};
 		return shortlink;
 	}
@@ -54,6 +55,7 @@ export class FaunaAdapter extends Adapter {
 			slug: response.data.slug,
 			target: response.data.target,
 			editKey: response.data.editKey,
+			encrypted: response.data.encrypted,
 		};
 		return shortlink;
 	}
@@ -66,6 +68,7 @@ export class FaunaAdapter extends Adapter {
 					editKey: hashedPassword,
 					slug: shortlink.slug,
 					target: shortlink.target,
+					encrypted: shortlink.encrypted,
 				},
 			})
 		);
@@ -74,6 +77,7 @@ export class FaunaAdapter extends Adapter {
 			editKey: hashedPassword,
 			slug: shortlink.slug,
 			target: shortlink.target,
+			encrypted: shortlink.encrypted,
 		};
 	}
 

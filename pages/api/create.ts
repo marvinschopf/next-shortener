@@ -16,7 +16,8 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
                     target: body.target,
                     id: null,
                     slug: randomString(4, true),
-                    editKey
+                    editKey,
+                    encrypted: body.target && body.target == true ? true : false
                 }
 
                 const database: Adapter = getAdapter();

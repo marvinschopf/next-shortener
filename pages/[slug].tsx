@@ -23,16 +23,26 @@ import getAdapter from "./../adapter/AdapterManager";
 
 import type { NextPageContext } from "next";
 import Layout from "../components/Layout";
-import { Fragment } from "react";
+import { FaLock, FaLockOpen } from "react-icons/fa";
+
+import Form from "react-bootstrap/Form";
+import Button from "react-bootstrap/Button";
+
+import { useState } from "react";
+
+import AES from "crypto-js/aes";
 
 type Props = {
 	slug?: string;
 	shortlink?: Shortlink;
 	display404: boolean;
+	isEncrypted?: boolean;
 };
 
 const Redirect: NextPage<Props> = (props) => {
 	const router = useRouter();
+
+	const [password, setPassword] = useState("");
 
 	if (props.display404) {
 		return (
@@ -43,6 +53,41 @@ const Redirect: NextPage<Props> = (props) => {
 			</Layout>
 		);
 	} else {
+		if (props.isEncrypted) {
+			return (
+				<Layout title="Encrypted link">
+					<h1>
+						<FaLock /> Encrypted link
+					</h1>
+					<Form
+						onSubmit={(event) => {
+							event.preventDefault();
+							router.push(
+								AES.decrypt(
+									props.shortlink.target,
+									password
+								).toString(CryptoJS.enc.Utf8)
+							);
+						}}
+					>
+						<Form.Group>
+							<Form.Label>Password</Form.Label>
+							<Form.Control
+								type="password"
+								placeholder="Password"
+								required
+								onChange={(event) => {
+									setPassword(event.target.value);
+								}}
+							/>
+						</Form.Group>
+						<Button variant="primary" block size="lg" type="submit">
+							<FaLockOpen /> Decrypt
+						</Button>
+					</Form>
+				</Layout>
+			);
+		}
 		return <Layout></Layout>;
 	}
 };
@@ -55,20 +100,33 @@ export const getServerSideProps = async (context: NextPageContext) => {
 				context.query.slug.toString()
 			);
 			if (shortlink && shortlink.target) {
-				context.res.writeHead(307, { location: shortlink.target });
-				context.res.end();
-				return {
-					props: {
-						slug: context.query.slug,
-						shortlink: shortlink,
-						display404: false,
-					},
-				};
+				if (shortlink.encrypted && shortlink.encrypted == true) {
+					return {
+						props: {
+							slug: context.query.slug,
+							isEncrypted: true,
+							display404: false,
+							shortlink: shortlink,
+						},
+					};
+				} else {
+					context.res.writeHead(307, { location: shortlink.target });
+					context.res.end();
+					return {
+						props: {
+							slug: context.query.slug,
+							shortlink: shortlink,
+							display404: false,
+							isEncrypted: false,
+						},
+					};
+				}
 			} else {
 				context.res.statusCode = 404;
 				return {
 					props: {
 						display404: true,
+						isEncrypted: false,
 					},
 				};
 			}
@@ -77,6 +135,7 @@ export const getServerSideProps = async (context: NextPageContext) => {
 			return {
 				props: {
 					display404: true,
+					isEncrypted: false,
 				},
 			};
 		}
@@ -85,6 +144,7 @@ export const getServerSideProps = async (context: NextPageContext) => {
 		return {
 			props: {
 				display404: true,
+				isEncrypted: false,
 			},
 		};
 	}

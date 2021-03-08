@@ -21,4 +21,5 @@ interface Shortlink {
     slug: string;
     target: string;
     editKey: string;
+    encrypted: boolean;
 }
