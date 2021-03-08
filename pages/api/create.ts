@@ -21,7 +21,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 							"https://hcaptcha.com/siteverify",
 							{
 								json: {
-									response: body.captchaToken.toString(),
+									response: body.hcaptchaToken.toString(),
 									secret: process.env.HCAPTCHA_SECRET,
 								},
 								responseType: "json",
