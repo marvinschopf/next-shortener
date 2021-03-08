@@ -17,24 +17,6 @@
  */
 
 export const getBaseURL = (): string => {
-	if (process.env.VERCEL_URL) {
-		if (process.env.VERCEL_URL.slice(-1) === "/") {
-			if (
-				process.env.VERCEL_URL.startsWith("http://") ||
-				process.env.VERCEL_URL.startsWith("https://")
-			) {
-				return process.env.VERCEL_URL;
-			} else {
-				return `https://${process.env.VERCEL_URL}`;
-			}
-		} else {
-			if (process.env.VERCEL_URL.startsWith("http")) {
-				return process.env.VERCEL_URL + "/";
-			} else {
-				return `https://${process.env.VERCEL_URL}/`;
-			}
-		}
-	}
 	if (process.env.BASE_URL) {
 		if (process.env.BASE_URL.slice(-1) === "/") {
 			if (
@@ -53,6 +35,24 @@ export const getBaseURL = (): string => {
 				return process.env.BASE_URL + "/";
 			} else {
 				return `https://${process.env.BASE_URL}/`;
+			}
+		}
+	}
+	if (process.env.VERCEL_URL) {
+		if (process.env.VERCEL_URL.slice(-1) === "/") {
+			if (
+				process.env.VERCEL_URL.startsWith("http://") ||
+				process.env.VERCEL_URL.startsWith("https://")
+			) {
+				return process.env.VERCEL_URL;
+			} else {
+				return `https://${process.env.VERCEL_URL}`;
+			}
+		} else {
+			if (process.env.VERCEL_URL.startsWith("http")) {
+				return process.env.VERCEL_URL + "/";
+			} else {
+				return `https://${process.env.VERCEL_URL}/`;
 			}
 		}
 	}
