@@ -10,7 +10,9 @@
 		"style:fix": "prettier --write **/*.tsx **/*.ts **/*.js **/*.json **/*.yml **/*.md"
 	},
 	"dependencies": {
+		"argon2": "0.27.1",
 		"bootstrap": "4.6.0",
+		"faunadb": "4.1.1",
 		"next": "10.0.8",
 		"react": "17.0.1",
 		"react-bootstrap": "1.5.1",
