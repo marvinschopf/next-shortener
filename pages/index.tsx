@@ -17,7 +17,7 @@
  */
 
 import { NextPage } from "next";
-import { Fragment, useState } from "react";
+import { Fragment, useState, useRef, MutableRefObject } from "react";
 
 import AES from "crypto-js/aes";
 
@@ -61,6 +61,8 @@ const Index: NextPage<Props> = ({
 	const [error, setError] = useState("");
 
 	const [hcaptchaToken, setHcaptchaToken] = useState("");
+
+	const hcaptchaElement: MutableRefObject<HCaptcha> = useRef();
 
 	return (
 		<Layout title="Next Shortener">
@@ -134,7 +136,9 @@ const Index: NextPage<Props> = ({
 									setVerifyEncryptionPassword("");
 									setEncrypted(false);
 									setError("");
+									hcaptchaElement.current.resetCaptcha();
 								} else {
+									hcaptchaElement.current.resetCaptcha();
 									setError(response.status.toString());
 								}
 							} else {
@@ -220,6 +224,7 @@ const Index: NextPage<Props> = ({
 				)}
 				{hcaptchaEnabled && (
 					<HCaptcha
+						ref={hcaptchaElement}
 						sitekey={hcaptchaSiteKey}
 						onVerify={(token: string) => {
 							setHcaptchaToken(token);
