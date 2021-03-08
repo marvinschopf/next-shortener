@@ -17,9 +17,22 @@
  */
 
 import argon2 from "argon2";
+import { randomBytes, createHash } from "crypto";
 
 export const hashPassword = async (password: string): Promise<string> => {
 	return await argon2.hash(password, {
 		type: argon2.argon2id,
 	});
+};
+
+export const randomString = (size: number): string => {
+	return randomBytes(size).toString("hex");
+};
+
+export const sha256 = (str: string): string => {
+	return createHash("sha256").update(str).digest("hex");
+};
+
+export const generateKey = (): string => {
+	return sha256(randomString(128) + randomString(128));
 };
