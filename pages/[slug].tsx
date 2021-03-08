@@ -63,12 +63,16 @@ const Redirect: NextPage<Props> = (props) => {
 					<Form
 						onSubmit={(event) => {
 							event.preventDefault();
-							router.push(
-								AES.decrypt(
-									props.shortlink.target,
-									password
-								).toString(CryptoEnc.Utf8)
-							);
+							try {
+								router.push(
+									AES.decrypt(
+										props.shortlink.target,
+										password
+									).toString(CryptoEnc.Utf8)
+								);
+							} catch (e) {
+								alert("Decryption failed.");
+							}
 						}}
 					>
 						<Form.Group>
