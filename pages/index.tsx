@@ -160,6 +160,7 @@ const Index: NextPage<Props> = ({
 							}
 						}
 					} else {
+						setIsLoading(false);
 						setError("Please solve the captcha.");
 					}
 				}}
