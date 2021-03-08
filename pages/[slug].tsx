@@ -33,23 +33,48 @@ type Props = {
 const Redirect: NextPage<Props> = (props) => {
 	const router = useRouter();
 
-	return (
-		<Layout>
-			{props.display404 && <h1>Error 404</h1>}
-			{props.slug && !props.display404 && <h1>{props.slug}</h1>}
-		</Layout>
-	);
+	return <Layout>{props.display404 && <h1>Error 404</h1>}</Layout>;
 };
 
 export const getServerSideProps = async (context: NextPageContext) => {
 	if (context.query && context.query.slug) {
-		return {
-			slug: context.query.slug,
-		};
+		const database: Adapter = getAdapter();
+		try {
+			const shortlink: Shortlink = await database.getShortlinkBySlug(
+				context.query.slug.toString()
+			);
+			if (shortlink && shortlink.target) {
+				context.res.writeHead(307, { location: shortlink.target });
+				context.res.end();
+				return {
+					props: {
+						slug: context.query.slug,
+						shortlink: shortlink,
+						display404: false,
+					},
+				};
+			} else {
+				context.res.statusCode = 404;
+				return {
+					props: {
+						display404: true,
+					},
+				};
+			}
+		} catch (e) {
+			context.res.statusCode = 404;
+			return {
+				props: {
+					display404: true,
+				},
+			};
+		}
 	} else {
 		context.res.statusCode = 404;
 		return {
-			display404: true,
+			props: {
+				display404: true,
+			},
 		};
 	}
 };
