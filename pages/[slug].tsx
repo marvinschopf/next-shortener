@@ -23,6 +23,7 @@ import getAdapter from "./../adapter/AdapterManager";
 
 import type { NextPageContext } from "next";
 import Layout from "../components/Layout";
+import { Fragment } from "react";
 
 type Props = {
 	slug?: string;
@@ -33,7 +34,17 @@ type Props = {
 const Redirect: NextPage<Props> = (props) => {
 	const router = useRouter();
 
-	return <Layout>{props.display404 && <h1>Error 404</h1>}</Layout>;
+	if (props.display404) {
+		return (
+			<Layout title="Error 404">
+				<p>
+					Unfortunately, the requested short link could not be found.
+				</p>
+			</Layout>
+		);
+	} else {
+		return <Layout></Layout>;
+	}
 };
 
 export const getServerSideProps = async (context: NextPageContext) => {
