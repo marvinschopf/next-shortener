@@ -26,7 +26,7 @@ const Index: FunctionComponent = () => {
 	const [targetUrl, setTargetUrl] = useState("");
 
 	return (
-		<Layout title="Kurzlink erstellen">
+		<Layout title="Next Shortener">
 			<Form
 				onSubmit={(event) => {
 					event.preventDefault();
