@@ -25,7 +25,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 							}
 						);
 						const responseCaptchaJson = await responseCaptcha.json();
-						if (!responseCaptchaJson.success) {
+						if (responseCaptchaJson.success != true) {
 							res.status(400).json({
 								success: false,
 								error: "CAPTCHA_INVALID",
