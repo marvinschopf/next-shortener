@@ -7,7 +7,7 @@
 		"dev": "next dev",
 		"build": "next build",
 		"start": "next start",
-		"style:fix": "prettier --write **/*.tsx **/*.ts **/*.js **/*.json **/*.yml **/*.md"
+		"style:fix": "prettier --write **/*.tsx **/*.ts **/*.js **/*.json **/*.yml **/*.md **/**/*.tsx **/**/*.js"
 	},
 	"dependencies": {
 		"argon2": "0.27.1",
