@@ -136,9 +136,11 @@ const Index: NextPage<Props> = ({
 									setVerifyEncryptionPassword("");
 									setEncrypted(false);
 									setError("");
-									hcaptchaElement.current.resetCaptcha();
+									if (hcaptchaEnabled)
+										hcaptchaElement.current.resetCaptcha();
 								} else {
-									hcaptchaElement.current.resetCaptcha();
+									if (hcaptchaEnabled)
+										hcaptchaElement.current.resetCaptcha();
 									setError(response.status.toString());
 								}
 							} else {
