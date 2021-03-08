@@ -1,5 +1,7 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 
+import fetch from "node-fetch";
+
 import { generateKey, randomString } from "./../../helpers/crypto";
 
 import getAdapter from "./../../adapter/AdapterManager";
@@ -10,6 +12,34 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 		if (req.body) {
 			const body = JSON.parse(req.body);
 			if (body.target) {
+				if (
+					process.env.HCAPTCHA_SITE_KEY &&
+					process.env.HCAPTCHA_SECRET
+				) {
+					if (body.hcaptchaToken) {
+						const responseCaptcha = await fetch(
+							"https://hcaptcha.com/siteverify",
+							{
+								method: "POST",
+								body: `response=${body.hcaptchaToken}&secret=${process.env.HCAPTCHA_SECRET}`,
+							}
+						);
+						const responseCaptchaJson = await responseCaptcha.json();
+						if (!responseCaptchaJson.success) {
+							res.status(400).json({
+								success: false,
+								error: "CAPTCHA_INVALID",
+							});
+							return;
+						}
+					} else {
+						res.status(400).json({
+							success: false,
+							error: "CAPTCHA_MISSING",
+						});
+						return;
+					}
+				}
 				const editKey: string = generateKey();
 
 				let shortlink: Shortlink = {

@@ -34,13 +34,20 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 
 import { FaClipboard, FaClipboardCheck, FaLock } from "react-icons/fa";
-import { verify } from "crypto";
+
+import HCaptcha from "@hcaptcha/react-hcaptcha";
 
 type Props = {
 	baseUrl: string;
+	hcaptchaSiteKey?: string;
+	hcaptchaEnabled?: boolean;
 };
 
-const Index: NextPage<Props> = ({ baseUrl }) => {
+const Index: NextPage<Props> = ({
+	baseUrl,
+	hcaptchaEnabled,
+	hcaptchaSiteKey,
+}) => {
 	const [targetUrl, setTargetUrl] = useState("");
 	const [isLoading, setIsLoading] = useState(false);
 	const [createdShortlink, setCreatedShortlink] = useState(null);
@@ -52,6 +59,8 @@ const Index: NextPage<Props> = ({ baseUrl }) => {
 	);
 
 	const [error, setError] = useState("");
+
+	const [hcaptchaToken, setHcaptchaToken] = useState("");
 
 	return (
 		<Layout title="Next Shortener">
@@ -98,47 +107,60 @@ const Index: NextPage<Props> = ({ baseUrl }) => {
 				onSubmit={async (event) => {
 					event.preventDefault();
 					setIsLoading(true);
-					if (isEncrypted) {
-						if (encryptionPassword === verifyEncryptionPassword) {
+					if (
+						(hcaptchaEnabled && hcaptchaToken.length >= 1) ||
+						!hcaptchaEnabled
+					) {
+						if (isEncrypted) {
+							if (
+								encryptionPassword === verifyEncryptionPassword
+							) {
+								const response = await fetch("/api/create", {
+									method: "POST",
+									body: JSON.stringify({
+										target: AES.encrypt(
+											targetUrl,
+											encryptionPassword
+										).toString(),
+										encrypted: true,
+										hcaptchaToken: hcaptchaToken,
+									}),
+								});
+								setIsLoading(false);
+								if (response.status === 200) {
+									const json = await response.json();
+									setCreatedShortlink(json.shortlink);
+									setEncryptionPassword("");
+									setVerifyEncryptionPassword("");
+									setEncrypted(false);
+									setError("");
+								} else {
+									setError(response.status.toString());
+								}
+							} else {
+								setIsLoading(false);
+								setError(
+									"The encryption passwords do not match."
+								);
+							}
+						} else {
 							const response = await fetch("/api/create", {
 								method: "POST",
 								body: JSON.stringify({
-									target: AES.encrypt(
-										targetUrl,
-										encryptionPassword
-									).toString(),
-									encrypted: true,
+									target: targetUrl,
+									hcaptchaToken: hcaptchaToken,
 								}),
 							});
 							setIsLoading(false);
 							if (response.status === 200) {
 								const json = await response.json();
 								setCreatedShortlink(json.shortlink);
-								setEncryptionPassword("");
-								setVerifyEncryptionPassword("");
-								setEncrypted(false);
-								setError("");
 							} else {
 								setError(response.status.toString());
 							}
-						} else {
-							setIsLoading(false);
-							setError("The encryption passwords do not match.");
 						}
 					} else {
-						const response = await fetch("/api/create", {
-							method: "POST",
-							body: JSON.stringify({
-								target: targetUrl,
-							}),
-						});
-						setIsLoading(false);
-						if (response.status === 200) {
-							const json = await response.json();
-							setCreatedShortlink(json.shortlink);
-						} else {
-							setError(response.status.toString());
-						}
+						setError("Please solve the captcha.");
 					}
 				}}
 			>
@@ -195,6 +217,20 @@ const Index: NextPage<Props> = ({ baseUrl }) => {
 						</Form.Group>
 					</Fragment>
 				)}
+				{hcaptchaEnabled && (
+					<HCaptcha
+						sitekey={hcaptchaSiteKey}
+						onVerify={(token: string) => {
+							setHcaptchaToken(token);
+						}}
+						onExpire={() => {
+							setHcaptchaToken("");
+						}}
+						onError={() => {
+							setHcaptchaToken("");
+						}}
+					/>
+				)}
 				<Button
 					variant="primary"
 					size="lg"
@@ -210,7 +246,13 @@ const Index: NextPage<Props> = ({ baseUrl }) => {
 };
 
 Index.getInitialProps = async () => {
-	return { baseUrl: getBaseURL() };
+	return {
+		baseUrl: getBaseURL(),
+		hcaptchaSiteKey: process.env.HCAPTCHA_SITE_KEY
+			? process.env.HCAPTCHA_SITE_KEY
+			: "",
+		hcaptchaEnabled: process.env.HCAPTCHA_SITE_KEY ? true : false,
+	};
 };
 
 export default Index;
