@@ -24,13 +24,26 @@ import Button from "react-bootstrap/Button";
 
 const Index: FunctionComponent = () => {
 	const [targetUrl, setTargetUrl] = useState("");
+	const [isLoading, setIsLoading] = useState(false);
 
 	return (
 		<Layout title="Next Shortener">
 			<Form
-				onSubmit={(event) => {
+				onSubmit={async (event) => {
 					event.preventDefault();
-					alert(targetUrl);
+					setIsLoading(true);
+					const response = await fetch("/api/create", {
+						method: "POST",
+						body: JSON.stringify({
+							target: targetUrl,
+						}),
+					});
+					if (response.status === 200) {
+						const json = await response.json();
+						alert(json.shortlink.slug);
+					} else {
+						alert(response.status);
+					}
 				}}
 			>
 				<Form.Group controlId="formBasicTarget">

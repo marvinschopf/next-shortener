@@ -17,7 +17,7 @@
  */
 
 import argon2 from "argon2";
-import { randomBytes, createHash } from "crypto";
+import { createHash } from "crypto";
 
 export const hashPassword = async (password: string): Promise<string> => {
 	return await argon2.hash(password, {
@@ -25,8 +25,20 @@ export const hashPassword = async (password: string): Promise<string> => {
 	});
 };
 
-export const randomString = (size: number): string => {
-	return randomBytes(size).toString("hex");
+export const randomString = (
+	size: number,
+	urlSafeCharacters: boolean = false
+): string => {
+	let result: string = "";
+	const characters: string = urlSafeCharacters
+		? "abcdefghiklmnopqrstuvwxyz23456789"
+		: "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+	for (let i: number = 0; i < size; i++) {
+		result += characters.charAt(
+			Math.floor(Math.random() * characters.length)
+		);
+	}
+	return result;
 };
 
 export const sha256 = (str: string): string => {

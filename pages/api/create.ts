@@ -6,32 +6,40 @@ import getAdapter from "./../../adapter/AdapterManager";
 import Adapter from '../../adapter/Adapter';
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
-    if(req.method == "post") {
-        if(req.body && req.body.target) {
+    if(req.method === "POST") {
+        if(req.body) {
+            const body = JSON.parse(req.body);
+            if(body.target) {
+                const editKey: string = generateKey();
 
-            const editKey: string = generateKey();
+                let shortlink: Shortlink = {
+                    target: body.target,
+                    id: null,
+                    slug: randomString(4, true),
+                    editKey
+                }
 
-            let shortlink: Shortlink = {
-                target: req.body.target,
-                id: null,
-                slug: randomString(4),
-                editKey
+                const database: Adapter = getAdapter();
+
+                shortlink = await database.createShortlink(shortlink);
+                shortlink.editKey = editKey;
+
+                res.status(200).json({
+                    success: true,
+                    shortlink
+                });
+            } else {
+                res.status(400).json({
+                    success: false,
+                    error: "INVALID",
+                    errorMessage:  "No target URL in request body."
+                });
             }
-
-            const database: Adapter = getAdapter();
-
-            shortlink = await database.createShortlink(shortlink);
-            shortlink.editKey = editKey;
-
-            res.status(200).json({
-                success: true,
-                shortlink
-            });
-
         } else {
             res.status(400).json({
                 success: false,
-                error: "INVALID"
+                error: "INVALID",
+                errorMessage: "No body in request."
             });
         }
     } else {
