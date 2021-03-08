@@ -56,7 +56,7 @@ const Index: NextPage<Props> = ({ baseUrl }) => {
 	return (
 		<Layout title="Next Shortener">
 			{error.length >= 1 && (
-				<Alert variant="error">
+				<Alert variant="danger">
 					<b>Error: </b> {error}
 				</Alert>
 			)}

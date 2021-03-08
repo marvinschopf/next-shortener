@@ -63,7 +63,7 @@ const Redirect: NextPage<Props> = (props) => {
 						<FaLock /> Encrypted link
 					</h1>
 					{error.length >= 1 && (
-						<Alert variant="error">
+						<Alert variant="danger">
 							<b>Error: </b> {error}
 						</Alert>
 					)}
