@@ -27,6 +27,7 @@ import { FaLock, FaLockOpen } from "react-icons/fa";
 
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
+import Alert from "react-bootstrap/Alert";
 
 import { useState } from "react";
 
@@ -44,6 +45,7 @@ const Redirect: NextPage<Props> = (props) => {
 	const router = useRouter();
 
 	const [password, setPassword] = useState("");
+	const [error, setError] = useState("");
 
 	if (props.display404) {
 		return (
@@ -60,6 +62,11 @@ const Redirect: NextPage<Props> = (props) => {
 					<h1>
 						<FaLock /> Encrypted link
 					</h1>
+					{error.length >= 1 && (
+						<Alert variant="error">
+							<b>Error: </b> {error}
+						</Alert>
+					)}
 					<Form
 						onSubmit={(event) => {
 							event.preventDefault();
@@ -71,7 +78,7 @@ const Redirect: NextPage<Props> = (props) => {
 									).toString(CryptoEnc.Utf8)
 								);
 							} catch (e) {
-								alert("Decryption failed.");
+								setError("Decryption failed.");
 							}
 						}}
 					>

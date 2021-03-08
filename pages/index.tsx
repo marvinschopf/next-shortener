@@ -51,8 +51,16 @@ const Index: NextPage<Props> = ({ baseUrl }) => {
 		""
 	);
 
+	const [error, setError] = useState("");
+
 	return (
 		<Layout title="Next Shortener">
+			{error.length >= 1 && (
+				<Alert variant="error">
+					<b>Error: </b> {error}
+				</Alert>
+			)}
+
 			{createdShortlink && (
 				<Alert variant="success">
 					<p>
@@ -109,11 +117,13 @@ const Index: NextPage<Props> = ({ baseUrl }) => {
 								setEncryptionPassword("");
 								setVerifyEncryptionPassword("");
 								setEncrypted(false);
+								setError("");
 							} else {
-								alert(response.status);
+								setError(response.status.toString());
 							}
 						} else {
-							alert("The encryption passwords do not match.");
+							setIsLoading(false);
+							setError("The encryption passwords do not match.");
 						}
 					} else {
 						const response = await fetch("/api/create", {
@@ -127,7 +137,7 @@ const Index: NextPage<Props> = ({ baseUrl }) => {
 							const json = await response.json();
 							setCreatedShortlink(json.shortlink);
 						} else {
-							alert(response.status);
+							setError(response.status.toString());
 						}
 					}
 				}}
