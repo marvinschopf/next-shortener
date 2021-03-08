@@ -150,10 +150,12 @@ const Index: NextPage<Props> = ({ baseUrl }) => {
 						onChange={(event) => {
 							setEncrypted(event.target.checked);
 						}}
+						label={
+							<Fragment>
+								<FaLock /> Encrypted redirect
+							</Fragment>
+						}
 					/>
-					<Form.Label>
-						<FaLock /> Encrypted redirect
-					</Form.Label>
 				</Form.Group>
 				{isEncrypted && (
 					<Fragment>
