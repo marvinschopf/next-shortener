@@ -29,6 +29,9 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 							res.status(400).json({
 								success: false,
 								error: "CAPTCHA_INVALID",
+								captchaError: responseCaptchaJson["error-codes"]
+									? responseCaptchaJson["error-codes"]
+									: [],
 							});
 							return;
 						}
