@@ -21,7 +21,10 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 							"https://hcaptcha.com/siteverify",
 							{
 								method: "POST",
-								body: `response=${body.hcaptchaToken}&secret=${process.env.HCAPTCHA_SECRET}`,
+								body: JSON.stringify({
+									response: body.captchaToken,
+									secret: process.env.HCAPTCHA_SECRET,
+								}),
 							}
 						);
 						const responseCaptchaJson = await responseCaptcha.json();
@@ -29,11 +32,6 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 							res.status(400).json({
 								success: false,
 								error: "CAPTCHA_INVALID",
-								hcaptchaError: responseCaptchaJson[
-									"error-codes"
-								]
-									? responseCaptchaJson["error-codes"]
-									: [],
 							});
 							return;
 						}
