@@ -145,15 +145,15 @@ const Index: NextPage<Props> = ({ baseUrl }) => {
 					/>
 				</Form.Group>
 				<Form.Group>
-					<Form.Label>
-						<FaLock /> Encrypted redirect
-					</Form.Label>
 					<Form.Check
 						type="checkbox"
 						onChange={(event) => {
 							setEncrypted(event.target.checked);
 						}}
 					/>
+					<Form.Label>
+						<FaLock /> Encrypted redirect
+					</Form.Label>
 				</Form.Group>
 				{isEncrypted && (
 					<Fragment>
