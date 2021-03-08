@@ -51,3 +51,5 @@ const Index: FunctionComponent = () => {
 		</Layout>
 	);
 };
+
+export default Index;
