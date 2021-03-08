@@ -30,6 +30,7 @@ import Button from "react-bootstrap/Button";
 
 import { useState } from "react";
 
+import { enc as CryptoEnc } from "crypto-js";
 import AES from "crypto-js/aes";
 
 type Props = {
@@ -55,7 +56,7 @@ const Redirect: NextPage<Props> = (props) => {
 	} else {
 		if (props.isEncrypted) {
 			return (
-				<Layout title="Encrypted link">
+				<Layout title="Encrypted link" omitTitle={true}>
 					<h1>
 						<FaLock /> Encrypted link
 					</h1>
@@ -66,7 +67,7 @@ const Redirect: NextPage<Props> = (props) => {
 								AES.decrypt(
 									props.shortlink.target,
 									password
-								).toString(CryptoJS.enc.Utf8)
+								).toString(CryptoEnc.Utf8)
 							);
 						}}
 					>
