@@ -40,6 +40,7 @@ import HCaptcha from "@hcaptcha/react-hcaptcha";
 import isURL from "validator/lib/isURL";
 
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
+import { useTranslation } from "next-i18next";
 
 type Props = {
 	baseUrl: string;
@@ -52,6 +53,8 @@ const Index: NextPage<Props> = ({
 	hcaptchaEnabled,
 	hcaptchaSiteKey,
 }) => {
+	const { t } = useTranslation("common");
+
 	const [targetUrl, setTargetUrl] = useState("");
 	const [isLoading, setIsLoading] = useState(false);
 	const [createdShortlink, setCreatedShortlink] = useState(null);
@@ -72,17 +75,17 @@ const Index: NextPage<Props> = ({
 		<Layout title="Next Shortener">
 			{error.length >= 1 && (
 				<Alert variant="danger">
-					<b>Error: </b> {error}
+					<b>{t("error")}: </b> {error}
 				</Alert>
 			)}
 
 			{createdShortlink && (
 				<Alert variant="success">
 					<p>
-						<b>Successfully created!</b>
+						<b>{t("created")}</b>
 					</p>
 					<Form.Group>
-						<Form.Label>Shortlink</Form.Label>
+						<Form.Label>{t("shortlink")}</Form.Label>
 						<Row>
 							<Col xs={12} lg={11} md={8}>
 								<Form.Control
@@ -262,7 +265,7 @@ const Index: NextPage<Props> = ({
 
 export const getStaticProps = async ({ locale }) => ({
 	props: {
-		...(await serverSideTranslations(locale, ["common", "footer"])),
+		...(await serverSideTranslations(locale, ["common"])),
 		baseUrl: getBaseURL(),
 		hcaptchaSiteKey: process.env.HCAPTCHA_SITE_KEY
 			? process.env.HCAPTCHA_SITE_KEY
