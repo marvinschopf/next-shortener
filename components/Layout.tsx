@@ -19,6 +19,7 @@
 import Head from "next/head";
 import { FunctionComponent } from "react";
 
+import Container from "react-bootstrap/Container";
 import Jumbotron from "react-bootstrap/Jumbotron";
 
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -38,10 +39,12 @@ const Layout: FunctionComponent<Props> = ({
 			<Head>
 				<title>{title}</title>
 			</Head>
-			<Jumbotron>
-				{title && !omitTitle && <h1>{title}</h1>}
-				{children}
-			</Jumbotron>
+			<Container>
+				<Jumbotron>
+					{title && !omitTitle && <h1>{title}</h1>}
+					{children}
+				</Jumbotron>
+			</Container>
 		</div>
 	);
 };
