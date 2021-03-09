@@ -37,6 +37,8 @@ import { FaClipboard, FaClipboardCheck, FaLock } from "react-icons/fa";
 
 import HCaptcha from "@hcaptcha/react-hcaptcha";
 
+import isURL from "validator/es/lib/isURL";
+
 type Props = {
 	baseUrl: string;
 	hcaptchaSiteKey?: string;
@@ -113,6 +115,11 @@ const Index: NextPage<Props> = ({
 						(hcaptchaEnabled && hcaptchaToken.length >= 1) ||
 						!hcaptchaEnabled
 					) {
+						if (!isURL(targetUrl)) {
+							setIsLoading(false);
+							setError("Please enter a valid URL.");
+							return;
+						}
 						if (isEncrypted) {
 							if (
 								encryptionPassword === verifyEncryptionPassword

@@ -7,6 +7,8 @@ import { generateKey, randomString } from "./../../helpers/crypto";
 import getAdapter from "./../../adapter/AdapterManager";
 import Adapter from "../../adapter/Adapter";
 
+import isURL from "validator/es/lib/isURL";
+
 export default async (req: NextApiRequest, res: NextApiResponse) => {
 	if (req.method === "POST") {
 		if (req.body) {
@@ -46,6 +48,15 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 						return;
 					}
 				}
+
+				if (!isURL(body.target)) {
+					res.status(400).json({
+						success: false,
+						error: "INVALID_TARGET",
+					});
+					return;
+				}
+
 				const editKey: string = generateKey();
 
 				let shortlink: Shortlink = {
