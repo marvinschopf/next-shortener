@@ -16,25 +16,26 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-import { FunctionComponent } from "react";
+import { Fragment, FunctionComponent } from "react";
 import useDarkMode, { DarkMode } from "use-dark-mode";
 
 const DarkModeProvider: FunctionComponent = (props) => {
 	const darkMode: DarkMode = useDarkMode();
 
-	if (darkMode.value === true) {
-		return (
-			<div className="bg-dark text-light" style={{ height: "100%" }}>
-				{props.children}
-			</div>
-		);
-	} else {
-		return (
-			<div className="bg-light text-dark" style={{ height: "100%" }}>
-				{props.children}
-			</div>
-		);
-	}
+	return (
+		<Fragment>
+			{darkMode.value && (
+				<div className="bg-dark text-light" style={{ height: "100%" }}>
+					{props.children}
+				</div>
+			)}
+			{!darkMode.value && (
+				<div className="bg-light text-dark" style={{ height: "100%" }}>
+					{props.children}
+				</div>
+			)}
+		</Fragment>
+	);
 };
 
 export default DarkModeProvider;
