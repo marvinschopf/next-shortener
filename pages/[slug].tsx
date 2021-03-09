@@ -57,11 +57,7 @@ const Redirect: NextPage<Props> = (props) => {
 
 	if (props.display404) {
 		return (
-			<Layout
-				title={t("Error404").toString()}
-				appName={props.appName}
-				currentPath={`/${props.slug}`}
-			>
+			<Layout title={t("Error404").toString()} appName={props.appName}>
 				<h1>{t("Error404")}</h1>
 				<p>
 					Unfortunately, the requested short link could not be found.
@@ -74,7 +70,6 @@ const Redirect: NextPage<Props> = (props) => {
 				<Layout
 					title={t("EncryptedLink").toString()}
 					appName={props.appName}
-					currentPath={`/${props.slug}`}
 				>
 					<h1>
 						<FaLock /> {t("EncryptedLink")}
@@ -121,12 +116,7 @@ const Redirect: NextPage<Props> = (props) => {
 				</Layout>
 			);
 		}
-		return (
-			<Layout
-				appName={props.appName}
-				currentPath={`/${props.slug}`}
-			></Layout>
-		);
+		return <Layout appName={props.appName}></Layout>;
 	}
 };
 

@@ -77,7 +77,7 @@ const Index: NextPage<Props> = ({
 	const router = useRouter();
 
 	return (
-		<Layout appName={appName} currentPath="/">
+		<Layout appName={appName}>
 			<h1>{appName}</h1>
 			{error.length >= 1 && (
 				<Alert variant="danger">

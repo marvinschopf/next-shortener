@@ -21,11 +21,7 @@ import { Fragment, FunctionComponent } from "react";
 
 import Form from "react-bootstrap/Form";
 
-type Props = {
-	currentPath: string;
-};
-
-const Footer: FunctionComponent<Props> = (props: Props) => {
+const Footer: FunctionComponent = () => {
 	const router = useRouter();
 
 	return (
@@ -36,12 +32,13 @@ const Footer: FunctionComponent<Props> = (props: Props) => {
 						as="select"
 						aria-label="Language"
 						onChange={(event) => {
-							const basePath: string =
-								router.basePath.slice(-1) === "/"
-									? router.basePath
-									: router.basePath + "/";
 							router.push(
-								`/${event.target.value}${router.asPath}`
+								{
+									pathname: router.pathname,
+									query: router.query,
+								},
+								router.asPath,
+								{ locale: event.target.value }
 							);
 						}}
 					>

@@ -29,14 +29,12 @@ import "bootstrap/dist/css/bootstrap.min.css";
 type Props = {
 	title?: string | false;
 	appName: string;
-	currentPath: string;
 };
 
 const Layout: FunctionComponent<Props> = ({
 	children,
 	title = false,
 	appName = "",
-	currentPath = "/",
 }) => {
 	return (
 		<div>
@@ -53,7 +51,7 @@ const Layout: FunctionComponent<Props> = ({
 				<Jumbotron>
 					{children}
 					<hr />
-					<Footer currentPath={currentPath} />
+					<Footer />
 				</Jumbotron>
 			</Container>
 		</div>
