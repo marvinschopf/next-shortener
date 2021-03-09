@@ -34,15 +34,11 @@ const Layout: FunctionComponent<Props> = ({
 	omitTitle = false,
 }) => {
 	return (
-		<div
-			style={{
-				height: "100%",
-			}}
-		>
+		<div>
 			<Head>
 				<title>{title}</title>
 			</Head>
-			<Jumbotron className="h-100 d-flex">
+			<Jumbotron>
 				{title && !omitTitle && <h1>{title}</h1>}
 				{children}
 			</Jumbotron>
