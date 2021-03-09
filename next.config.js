@@ -16,9 +16,6 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-const withPreact = require('next-plugin-preact')
-const { i18n } = require('./next-i18next.config')
+const withPreact = require("next-plugin-preact");
 
-module.exports = withPreact({
-  //i18n
-})
+module.exports = withPreact({});
