@@ -39,6 +39,8 @@ import HCaptcha from "@hcaptcha/react-hcaptcha";
 
 import isURL from "validator/lib/isURL";
 
+import { serverSideTranslations } from "next-i18next/serverSideTranslations";
+
 type Props = {
 	baseUrl: string;
 	hcaptchaSiteKey?: string;
@@ -258,14 +260,15 @@ const Index: NextPage<Props> = ({
 	);
 };
 
-Index.getInitialProps = async () => {
-	return {
+export const getStaticProps = async ({ locale }) => ({
+	props: {
+		...(await serverSideTranslations(locale, ["common", "footer"])),
 		baseUrl: getBaseURL(),
 		hcaptchaSiteKey: process.env.HCAPTCHA_SITE_KEY
 			? process.env.HCAPTCHA_SITE_KEY
 			: "",
 		hcaptchaEnabled: process.env.HCAPTCHA_SITE_KEY ? true : false,
-	};
-};
+	},
+});
 
 export default Index;
