@@ -61,14 +61,6 @@ const Footer: FunctionComponent = () => {
 					</a>
 				</div>
 			</div>
-			<ToggleButton
-				onChange={(event) => {
-					if (event.target.checked === true) darkMode.enable();
-					else darkMode.disable();
-				}}
-				checked={darkMode.value}
-				value={darkMode.value.toString()}
-			/>
 		</Fragment>
 	);
 };
