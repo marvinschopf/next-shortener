@@ -12,5 +12,6 @@
 	"Save": "Speichern",
 	"DecryptionFailed": "Entschlüsselung fehlgeschlagen.",
 	"Decrypt": "Entschlüsseln",
-	"InvalidDestinationURL": "Ungültige Ziel-URL."
+	"InvalidDestinationURL": "Ungültige Ziel-URL.",
+	"Error404": "Fehler 404"
 }

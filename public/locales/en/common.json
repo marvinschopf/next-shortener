@@ -12,5 +12,6 @@
 	"Save": "Save",
 	"DecryptionFailed": "Decryption failed.",
 	"Decrypt": "Decrypt",
-	"InvalidDestinationURL": "Destination URL is not valid."
+	"InvalidDestinationURL": "Destination URL is not valid.",
+	"Error404": "Error 404"
 }

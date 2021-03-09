@@ -58,6 +58,7 @@ const Redirect: NextPage<Props> = (props) => {
 	if (props.display404) {
 		return (
 			<Layout title={t("Error404").toString()} appName={props.appName}>
+				<h1>{t("Error404")}</h1>
 				<p>
 					Unfortunately, the requested short link could not be found.
 				</p>
@@ -140,7 +141,6 @@ export const getServerSideProps = async (context: NextPageContext) => {
 							// @ts-ignore
 							...(await serverSideTranslations(context.locale, [
 								"common",
-								"footer",
 							])),
 						},
 					};
@@ -157,7 +157,6 @@ export const getServerSideProps = async (context: NextPageContext) => {
 							// @ts-ignore
 							...(await serverSideTranslations(context.locale, [
 								"common",
-								"footer",
 							])),
 						},
 					};
@@ -172,7 +171,6 @@ export const getServerSideProps = async (context: NextPageContext) => {
 						// @ts-ignore
 						...(await serverSideTranslations(context.locale, [
 							"common",
-							"footer",
 						])),
 					},
 				};
@@ -187,7 +185,6 @@ export const getServerSideProps = async (context: NextPageContext) => {
 					// @ts-ignore
 					...(await serverSideTranslations(context.locale, [
 						"common",
-						"footer",
 					])),
 				},
 			};
@@ -200,10 +197,7 @@ export const getServerSideProps = async (context: NextPageContext) => {
 				isEncrypted: false,
 				appName,
 				// @ts-ignore
-				...(await serverSideTranslations(context.locale, [
-					"common",
-					"footer",
-				])),
+				...(await serverSideTranslations(context.locale, ["common"])),
 			},
 		};
 	}

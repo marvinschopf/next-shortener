@@ -48,10 +48,7 @@ const Layout: FunctionComponent<Props> = ({
 				{!title && <title>{appName}</title>}
 			</Head>
 			<Container>
-				<Jumbotron>
-					{title && !omitTitle && <h1>{title}</h1>}
-					{children}
-				</Jumbotron>
+				<Jumbotron>{children}</Jumbotron>
 			</Container>
 		</div>
 	);

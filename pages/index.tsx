@@ -78,6 +78,7 @@ const Index: NextPage<Props> = ({
 
 	return (
 		<Layout appName={appName}>
+			<h1>{appName}</h1>
 			{error.length >= 1 && (
 				<Alert variant="danger">
 					<b>{t("Error")}: </b> {error}
