@@ -265,7 +265,7 @@ const Index: NextPage<Props> = ({
 
 export const getStaticProps = async ({ locale }) => ({
 	props: {
-		...(await serverSideTranslations(locale, ["common"])),
+		...(await serverSideTranslations("en", ["common"])),
 		baseUrl: getBaseURL(),
 		hcaptchaSiteKey: process.env.HCAPTCHA_SITE_KEY
 			? process.env.HCAPTCHA_SITE_KEY
