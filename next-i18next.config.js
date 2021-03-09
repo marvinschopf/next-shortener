@@ -18,7 +18,7 @@
 
 const LanguageDetector = require("i18next-browser-languagedetector");
 
-module.exports = {
+module.exports.i18n = {
 	defaultLocale: "en",
 	locales: ["en", "de"],
 	use: [LanguageDetector],
