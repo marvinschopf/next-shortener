@@ -47,7 +47,11 @@ const Layout: FunctionComponent<Props> = ({
 					)}
 				{!title && <title>{appName}</title>}
 			</Head>
-			<Container>
+			<Container
+				style={{
+					height: "100%",
+				}}
+			>
 				<Jumbotron>
 					{children}
 					<hr />
