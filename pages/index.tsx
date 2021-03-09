@@ -24,7 +24,7 @@ import AES from "crypto-js/aes";
 
 import Layout from "../components/Layout";
 
-import { getBaseURL } from "./../helpers/meta";
+import { getAppName, getBaseURL } from "./../helpers/meta";
 
 import { CopyToClipboard } from "react-copy-to-clipboard";
 
@@ -47,12 +47,14 @@ type Props = {
 	baseUrl: string;
 	hcaptchaSiteKey?: string;
 	hcaptchaEnabled?: boolean;
+	appName: string;
 };
 
 const Index: NextPage<Props> = ({
 	baseUrl,
 	hcaptchaEnabled,
 	hcaptchaSiteKey,
+	appName,
 }) => {
 	const { t } = useTranslation("common");
 
@@ -75,7 +77,7 @@ const Index: NextPage<Props> = ({
 	const router = useRouter();
 
 	return (
-		<Layout title="Next Shortener">
+		<Layout appName={appName}>
 			{error.length >= 1 && (
 				<Alert variant="danger">
 					<b>{t("Error")}: </b> {error}
@@ -275,6 +277,7 @@ export const getStaticProps = async ({ locale }) => ({
 			? process.env.HCAPTCHA_SITE_KEY
 			: "",
 		hcaptchaEnabled: process.env.HCAPTCHA_SITE_KEY ? true : false,
+		appName: getAppName(),
 	},
 });
 

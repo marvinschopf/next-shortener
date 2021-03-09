@@ -25,19 +25,27 @@ import Jumbotron from "react-bootstrap/Jumbotron";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 type Props = {
-	title?: string;
+	title?: string | false;
 	omitTitle?: boolean;
+	appName: string;
 };
 
 const Layout: FunctionComponent<Props> = ({
 	children,
-	title = "Next Shortener",
+	title = false,
 	omitTitle = false,
+	appName = "",
 }) => {
 	return (
 		<div>
 			<Head>
-				<title>{title}</title>
+				{title &&
+					(typeof title == "string" ? title.length >= 1 : false) && (
+						<title>
+							{title} | {appName}
+						</title>
+					)}
+				{!title && <title>{appName}</title>}
 			</Head>
 			<Container>
 				<Jumbotron>

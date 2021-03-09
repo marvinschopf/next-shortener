@@ -9,5 +9,8 @@
 	"EncryptedRedirect": "Verschlüsselte Weiterleitung",
 	"Password": "Passwort",
 	"VerifyPassword": "Passwort bestätigen.",
-	"Save": "Speichern"
+	"Save": "Speichern",
+	"DecryptionFailed": "Entschlüsselung fehlgeschlagen.",
+	"Decrypt": "Entschlüsseln",
+	"InvalidDestinationURL": "Ungültige Ziel-URL."
 }

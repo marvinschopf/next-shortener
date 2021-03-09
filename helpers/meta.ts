@@ -58,3 +58,13 @@ export const getBaseURL = (): string => {
 	}
 	return "/";
 };
+
+export const getAppName = (): string => {
+	if (process.env.APP_NAME) {
+		return process.env.APP_NAME;
+	}
+	if (process.env.APP_TITLE) {
+		return process.env.APP_TITLE;
+	}
+	return "Next Shortener";
+};

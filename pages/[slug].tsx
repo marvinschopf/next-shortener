@@ -34,15 +34,22 @@ import { useState } from "react";
 import { enc as CryptoEnc } from "crypto-js";
 import AES from "crypto-js/aes";
 import isURL from "validator/lib/isURL";
+import { getAppName } from "../helpers/meta";
+
+import { serverSideTranslations } from "next-i18next/serverSideTranslations";
+import { useTranslation } from "next-i18next";
 
 type Props = {
 	slug?: string;
 	shortlink?: Shortlink;
 	display404: boolean;
 	isEncrypted?: boolean;
+	appName: string;
 };
 
 const Redirect: NextPage<Props> = (props) => {
+	const { t } = useTranslation("common");
+
 	const router = useRouter();
 
 	const [password, setPassword] = useState("");
@@ -50,7 +57,7 @@ const Redirect: NextPage<Props> = (props) => {
 
 	if (props.display404) {
 		return (
-			<Layout title="Error 404">
+			<Layout title={t("Error404").toString()} appName={props.appName}>
 				<p>
 					Unfortunately, the requested short link could not be found.
 				</p>
@@ -59,13 +66,17 @@ const Redirect: NextPage<Props> = (props) => {
 	} else {
 		if (props.isEncrypted) {
 			return (
-				<Layout title="Encrypted link" omitTitle={true}>
+				<Layout
+					title={t("EncryptedLink").toString()}
+					omitTitle={true}
+					appName={props.appName}
+				>
 					<h1>
-						<FaLock /> Encrypted link
+						<FaLock /> {t("EncryptedLink")}
 					</h1>
 					{error.length >= 1 && (
 						<Alert variant="danger">
-							<b>Error: </b> {error}
+							<b>{t("Error")}: </b> {error}
 						</Alert>
 					)}
 					<Form
@@ -77,21 +88,21 @@ const Redirect: NextPage<Props> = (props) => {
 									password
 								).toString(CryptoEnc.Utf8);
 								if (!isURL(decryptedTarget)) {
-									setError("Destination URL is not valid.");
+									setError(t("InvalidDestinationURL"));
 									return;
 								}
 								router.push(decryptedTarget);
 							} catch (e) {
-								setError("Decryption failed.");
+								setError(t("DecryptionFailed"));
 								return;
 							}
 						}}
 					>
 						<Form.Group>
-							<Form.Label>Password</Form.Label>
+							<Form.Label>{t("Password")}</Form.Label>
 							<Form.Control
 								type="password"
-								placeholder="Password"
+								placeholder={t("Password")}
 								required
 								onChange={(event) => {
 									setPassword(event.target.value);
@@ -99,17 +110,18 @@ const Redirect: NextPage<Props> = (props) => {
 							/>
 						</Form.Group>
 						<Button variant="primary" block size="lg" type="submit">
-							<FaLockOpen /> Decrypt
+							<FaLockOpen /> {t("Decrypt")}
 						</Button>
 					</Form>
 				</Layout>
 			);
 		}
-		return <Layout></Layout>;
+		return <Layout appName={props.appName}></Layout>;
 	}
 };
 
 export const getServerSideProps = async (context: NextPageContext) => {
+	const appName: string = getAppName();
 	if (context.query && context.query.slug) {
 		const database: Adapter = getAdapter();
 		try {
@@ -124,6 +136,12 @@ export const getServerSideProps = async (context: NextPageContext) => {
 							isEncrypted: true,
 							display404: false,
 							shortlink: shortlink,
+							appName,
+							// @ts-ignore
+							...(await serverSideTranslations(context.locale, [
+								"common",
+								"footer",
+							])),
 						},
 					};
 				} else {
@@ -135,6 +153,12 @@ export const getServerSideProps = async (context: NextPageContext) => {
 							shortlink: shortlink,
 							display404: false,
 							isEncrypted: false,
+							appName,
+							// @ts-ignore
+							...(await serverSideTranslations(context.locale, [
+								"common",
+								"footer",
+							])),
 						},
 					};
 				}
@@ -144,6 +168,12 @@ export const getServerSideProps = async (context: NextPageContext) => {
 					props: {
 						display404: true,
 						isEncrypted: false,
+						appName,
+						// @ts-ignore
+						...(await serverSideTranslations(context.locale, [
+							"common",
+							"footer",
+						])),
 					},
 				};
 			}
@@ -153,6 +183,12 @@ export const getServerSideProps = async (context: NextPageContext) => {
 				props: {
 					display404: true,
 					isEncrypted: false,
+					appName,
+					// @ts-ignore
+					...(await serverSideTranslations(context.locale, [
+						"common",
+						"footer",
+					])),
 				},
 			};
 		}
@@ -162,6 +198,12 @@ export const getServerSideProps = async (context: NextPageContext) => {
 			props: {
 				display404: true,
 				isEncrypted: false,
+				appName,
+				// @ts-ignore
+				...(await serverSideTranslations(context.locale, [
+					"common",
+					"footer",
+				])),
 			},
 		};
 	}
