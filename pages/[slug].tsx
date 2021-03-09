@@ -33,6 +33,7 @@ import { useState } from "react";
 
 import { enc as CryptoEnc } from "crypto-js";
 import AES from "crypto-js/aes";
+import isURL from "validator/lib/isURL";
 
 type Props = {
 	slug?: string;
@@ -71,14 +72,18 @@ const Redirect: NextPage<Props> = (props) => {
 						onSubmit={(event) => {
 							event.preventDefault();
 							try {
-								router.push(
-									AES.decrypt(
-										props.shortlink.target,
-										password
-									).toString(CryptoEnc.Utf8)
-								);
+								const decryptedTarget: string = AES.decrypt(
+									props.shortlink.target,
+									password
+								).toString(CryptoEnc.Utf8);
+								if (!isURL(decryptedTarget)) {
+									setError("Destination URL is not valid.");
+									return;
+								}
+								router.push(decryptedTarget);
 							} catch (e) {
 								setError("Decryption failed.");
+								return;
 							}
 						}}
 					>
