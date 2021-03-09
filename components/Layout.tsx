@@ -28,15 +28,15 @@ import "bootstrap/dist/css/bootstrap.min.css";
 
 type Props = {
 	title?: string | false;
-	omitTitle?: boolean;
 	appName: string;
+	currentPath: string;
 };
 
 const Layout: FunctionComponent<Props> = ({
 	children,
 	title = false,
-	omitTitle = false,
 	appName = "",
+	currentPath = "/",
 }) => {
 	return (
 		<div>
@@ -53,7 +53,7 @@ const Layout: FunctionComponent<Props> = ({
 				<Jumbotron>
 					{children}
 					<hr />
-					<Footer />
+					<Footer currentPath={currentPath} />
 				</Jumbotron>
 			</Container>
 		</div>

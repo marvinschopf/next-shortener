@@ -21,7 +21,11 @@ import { Fragment, FunctionComponent } from "react";
 
 import Form from "react-bootstrap/Form";
 
-const Footer: FunctionComponent = () => {
+type Props = {
+	currentPath: string;
+};
+
+const Footer: FunctionComponent<Props> = (props: Props) => {
 	const router = useRouter();
 
 	return (
@@ -37,7 +41,7 @@ const Footer: FunctionComponent = () => {
 									? router.basePath
 									: router.basePath + "/";
 							router.push(
-								`${basePath}${event.target.value}${router.asPath}`
+								`/${event.target.value}${props.currentPath}`
 							);
 						}}
 					>
