@@ -24,6 +24,11 @@ const DarkModeProvider: FunctionComponent = (props) => {
 
 	return (
 		<Fragment>
+			<style jsx global>{`
+				#__next {
+					height: 100%;
+				}
+			`}</style>
 			{darkMode.value && (
 				<div className="bg-dark text-light" style={{ height: "100%" }}>
 					{props.children}
