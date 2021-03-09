@@ -17,9 +17,8 @@
  */
 
 import Head from "next/head";
-import { Fragment, FunctionComponent } from "react";
+import { FunctionComponent } from "react";
 
-import Container from "react-bootstrap/Container";
 import Jumbotron from "react-bootstrap/Jumbotron";
 
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -35,17 +34,19 @@ const Layout: FunctionComponent<Props> = ({
 	omitTitle = false,
 }) => {
 	return (
-		<Fragment>
+		<div
+			style={{
+				height: "100%",
+			}}
+		>
 			<Head>
 				<title>{title}</title>
 			</Head>
-			<Container>
-				<Jumbotron>
-					{title && !omitTitle && <h1>{title}</h1>}
-					{children}
-				</Jumbotron>
-			</Container>
-		</Fragment>
+			<Jumbotron className="h-100 d-flex">
+				{title && !omitTitle && <h1>{title}</h1>}
+				{children}
+			</Jumbotron>
+		</div>
 	);
 };
 
