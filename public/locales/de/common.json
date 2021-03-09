@@ -4,7 +4,7 @@
 	"SuccessfullyCreated": "Erfolgreich erstellt!",
 	"EnterValidURL": "Bitte geben Sie eine gültige URL ein.",
 	"PasswordsDontMatch": "Die Passwörter stimmen nicht überein.",
-	"SolveCaptcha": "Bitte lösen Sie da Captcha.",
+	"SolveCaptcha": "Bitte lösen Sie das Captcha.",
 	"DestinationURL": "Ziel-URL",
 	"EncryptedRedirect": "Verschlüsselte Weiterleitung",
 	"Password": "Passwort",
