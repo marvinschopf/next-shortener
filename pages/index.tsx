@@ -135,6 +135,8 @@ const Index: NextPage<Props> = ({
 										hcaptchaToken: hcaptchaToken,
 									}),
 								});
+								if (hcaptchaEnabled)
+									hcaptchaElement.current.resetCaptcha();
 								setIsLoading(false);
 								if (response.status === 200) {
 									const json = await response.json();
@@ -143,11 +145,7 @@ const Index: NextPage<Props> = ({
 									setVerifyEncryptionPassword("");
 									setEncrypted(false);
 									setError("");
-									if (hcaptchaEnabled)
-										hcaptchaElement.current.resetCaptcha();
 								} else {
-									if (hcaptchaEnabled)
-										hcaptchaElement.current.resetCaptcha();
 									setError(response.status.toString());
 								}
 							} else {
