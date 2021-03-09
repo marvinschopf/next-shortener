@@ -16,7 +16,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-module.exports.i18ni18n = {
+module.exports.i18n = {
 	defaultLocale: "en",
 	locales: ["en", "de"],
 };
