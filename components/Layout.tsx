@@ -23,6 +23,7 @@ import Container from "react-bootstrap/Container";
 import Jumbotron from "react-bootstrap/Jumbotron";
 
 import Footer from "./Footer";
+import DarkModeProvider from "./DarkModeProvider";
 
 import "bootstrap/dist/css/bootstrap.min.css";
 
@@ -37,7 +38,7 @@ const Layout: FunctionComponent<Props> = ({
 	appName = "",
 }) => {
 	return (
-		<div>
+		<DarkModeProvider>
 			<Head>
 				{title &&
 					(typeof title == "string" ? title.length >= 1 : false) && (
@@ -58,7 +59,7 @@ const Layout: FunctionComponent<Props> = ({
 					<Footer />
 				</Jumbotron>
 			</Container>
-		</div>
+		</DarkModeProvider>
 	);
 };
 

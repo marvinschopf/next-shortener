@@ -16,29 +16,17 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-import Document, { Html, Head, Main, NextScript } from "next/document";
+import { FunctionComponent } from "react";
+import useDarkMode, { DarkMode } from "use-dark-mode";
 
-class MyDocument extends Document {
-	static async getInitialProps(ctx) {
-		const initialProps = await Document.getInitialProps(ctx);
-		return { ...initialProps };
+const DarkModeProvider: FunctionComponent = (props) => {
+	const darkMode: DarkMode = useDarkMode();
+
+	if (darkMode.value === true) {
+		return <div className="bg-dark text-light">{props.children}</div>;
+	} else {
+		return <div className="bg-light text-dark">{props.children}</div>;
 	}
+};
 
-	render() {
-		return (
-			<Html>
-				<Head />
-				<body
-					style={{
-						height: "100%",
-					}}
-				>
-					<Main />
-					<NextScript />
-				</body>
-			</Html>
-		);
-	}
-}
-
-export default MyDocument;
+export default DarkModeProvider;
