@@ -33,6 +33,7 @@ import Button from "react-bootstrap/Button";
 import Alert from "react-bootstrap/Alert";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
+import Spinner from "react-bootstrap/Spinner";
 
 import { FaClipboard, FaClipboardCheck, FaLock } from "react-icons/fa";
 
@@ -263,7 +264,17 @@ const Index: NextPage<Props> = ({
 					type="submit"
 					disabled={isLoading}
 				>
-					{t("Save")}
+					{isLoading && (
+						<Fragment>
+							<Spinner animation="border" role="status">
+								<span className="sr-only">
+									{t("Loading")}...
+								</span>
+							</Spinner>
+							&nbsp;{t("Loading")}...
+						</Fragment>
+					)}
+					{!isLoading && <span>{t("Save")}</span>}
 				</Button>
 			</Form>
 		</Layout>

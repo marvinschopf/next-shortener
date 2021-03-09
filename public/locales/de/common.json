@@ -14,5 +14,6 @@
 	"Decrypt": "Entschlüsseln",
 	"InvalidDestinationURL": "Ungültige Ziel-URL.",
 	"Error404": "Fehler 404",
-	"EncryptedLink": "Verschlüsselte Weiterleitung"
+	"EncryptedLink": "Verschlüsselte Weiterleitung",
+	"Loading": "Laden"
 }
