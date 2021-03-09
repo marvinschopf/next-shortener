@@ -16,7 +16,10 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
+const path = require("path");
+
 module.exports.i18n = {
 	defaultLocale: "en",
 	locales: ["en", "de"],
+	localePath: path.resolve("./public/locales"),
 };
