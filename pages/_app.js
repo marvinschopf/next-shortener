@@ -17,7 +17,7 @@
  */
 
 import "../styles/globals.css";
-const { i18n } = require("./next-i18next.config");
+import { appWithTranslation } from "next-i18next";
 
 function MyApp({ Component, pageProps }) {
 	return <Component {...pageProps} />;
