@@ -23,9 +23,17 @@ const DarkModeProvider: FunctionComponent = (props) => {
 	const darkMode: DarkMode = useDarkMode();
 
 	if (darkMode.value === true) {
-		return <div className="bg-dark text-light">{props.children}</div>;
+		return (
+			<div className="bg-dark text-light" style={{ height: "100%" }}>
+				{props.children}
+			</div>
+		);
 	} else {
-		return <div className="bg-light text-dark">{props.children}</div>;
+		return (
+			<div className="bg-light text-dark" style={{ height: "100%" }}>
+				{props.children}
+			</div>
+		);
 	}
 };
 
