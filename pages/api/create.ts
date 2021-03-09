@@ -49,7 +49,10 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 					}
 				}
 
-				if (!isURL(body.target)) {
+				const encrypted: boolean =
+					body.encrypted && body.encrypted == true ? true : false;
+
+				if (!isURL(body.target) && !encrypted) {
 					res.status(400).json({
 						success: false,
 						error: "INVALID_TARGET",
@@ -64,8 +67,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 					id: null,
 					slug: randomString(4, true),
 					editKey,
-					encrypted:
-						body.encrypted && body.encrypted == true ? true : false,
+					encrypted: encrypted,
 				};
 
 				const database: Adapter = getAdapter();
