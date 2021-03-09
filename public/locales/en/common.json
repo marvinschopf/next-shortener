@@ -13,5 +13,6 @@
 	"DecryptionFailed": "Decryption failed.",
 	"Decrypt": "Decrypt",
 	"InvalidDestinationURL": "Destination URL is not valid.",
-	"Error404": "Error 404"
+	"Error404": "Error 404",
+	"EncryptedLink": "Encrypted link"
 }

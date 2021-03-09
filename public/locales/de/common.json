@@ -13,5 +13,6 @@
 	"DecryptionFailed": "Entschlüsselung fehlgeschlagen.",
 	"Decrypt": "Entschlüsseln",
 	"InvalidDestinationURL": "Ungültige Ziel-URL.",
-	"Error404": "Fehler 404"
+	"Error404": "Fehler 404",
+	"EncryptedLink": "Verschlüsselte Weiterleitung"
 }
