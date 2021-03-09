@@ -16,11 +16,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-import LanguageDetector from "i18next-browser-languagedetector";
-
-export const i18n = {
+module.exports.i18ni18n = {
 	defaultLocale: "en",
 	locales: ["en", "de"],
-	use: [LanguageDetector],
-	serializeConfig: false,
 };

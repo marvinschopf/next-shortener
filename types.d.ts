@@ -17,9 +17,9 @@
  */
 
 interface Shortlink {
-    id: string;
-    slug: string;
-    target: string;
-    editKey: string;
-    encrypted: boolean;
+	id: string;
+	slug: string;
+	target: string;
+	editKey: string;
+	encrypted: boolean;
 }
