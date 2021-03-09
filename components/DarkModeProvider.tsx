@@ -26,6 +26,9 @@ const DarkModeProvider: FunctionComponent = (props) => {
 		<Fragment>
 			<style jsx global>{`
 				#__next {
+					height: 100% !important;
+				}
+				html {
 					height: 100%;
 				}
 			`}</style>
