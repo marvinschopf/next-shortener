@@ -22,6 +22,8 @@ import { FunctionComponent } from "react";
 import Container from "react-bootstrap/Container";
 import Jumbotron from "react-bootstrap/Jumbotron";
 
+import Footer from "./Footer";
+
 import "bootstrap/dist/css/bootstrap.min.css";
 
 type Props = {
@@ -48,7 +50,11 @@ const Layout: FunctionComponent<Props> = ({
 				{!title && <title>{appName}</title>}
 			</Head>
 			<Container>
-				<Jumbotron>{children}</Jumbotron>
+				<Jumbotron>
+					{children}
+					<hr />
+					<Footer />
+				</Jumbotron>
 			</Container>
 		</div>
 	);
