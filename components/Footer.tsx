@@ -18,11 +18,15 @@
 
 import { useRouter } from "next/router";
 import { Fragment, FunctionComponent } from "react";
+import useDarkMode, { DarkMode } from "use-dark-mode";
 
 import Form from "react-bootstrap/Form";
+import ToggleButton from "react-bootstrap/ToggleButton";
 
 const Footer: FunctionComponent = () => {
 	const router = useRouter();
+
+	const darkMode: DarkMode = useDarkMode();
 
 	return (
 		<Fragment>
@@ -57,6 +61,14 @@ const Footer: FunctionComponent = () => {
 					</a>
 				</div>
 			</div>
+			<ToggleButton
+				onChange={(event) => {
+					if (event.target.checked === true) darkMode.enable();
+					else darkMode.disable();
+				}}
+				checked={darkMode.value}
+				value={darkMode.value.toString()}
+			/>
 		</Fragment>
 	);
 };
