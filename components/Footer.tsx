@@ -28,29 +28,23 @@ const Footer: FunctionComponent = () => {
 		<Fragment>
 			<div className="d-flex">
 				<div>
-					<Form.Control as="select" aria-label="Language">
-						<option
-							onSelect={() => {
-								const basePath: string =
-									router.basePath.slice(-1) === "/"
-										? router.basePath
-										: router.basePath + "/";
-								router.push(`${basePath}en${router.asPath}`);
-							}}
-							selected={router.locale === "en"}
-						>
+					<Form.Control
+						as="select"
+						aria-label="Language"
+						onChange={(event) => {
+							const basePath: string =
+								router.basePath.slice(-1) === "/"
+									? router.basePath
+									: router.basePath + "/";
+							router.push(
+								`${basePath}${event.target.value}${router.asPath}`
+							);
+						}}
+					>
+						<option selected={router.locale === "en"} value="en">
 							English
 						</option>
-						<option
-							onSelect={() => {
-								const basePath: string =
-									router.basePath.slice(-1) === "/"
-										? router.basePath
-										: router.basePath + "/";
-								router.push(`${basePath}de${router.asPath}`);
-							}}
-							selected={router.locale === "de"}
-						>
+						<option selected={router.locale === "de"} value="de">
 							Deutsch
 						</option>
 					</Form.Control>
