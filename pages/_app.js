@@ -23,4 +23,4 @@ function MyApp({ Component, pageProps }) {
 	return <Component {...pageProps} />;
 }
 
-export default appWithTranslation(MyApp);
+export default appWithTranslation(MyApp, require("./../next-i18next.config"));
