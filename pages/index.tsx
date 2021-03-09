@@ -37,7 +37,7 @@ import { FaClipboard, FaClipboardCheck, FaLock } from "react-icons/fa";
 
 import HCaptcha from "@hcaptcha/react-hcaptcha";
 
-import isURL from "validator/es/lib/isURL";
+import isURL from "validator/lib/isURL";
 
 type Props = {
 	baseUrl: string;

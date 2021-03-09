@@ -7,7 +7,7 @@ import { generateKey, randomString } from "./../../helpers/crypto";
 import getAdapter from "./../../adapter/AdapterManager";
 import Adapter from "../../adapter/Adapter";
 
-import isURL from "validator/es/lib/isURL";
+import isURL from "validator/lib/isURL";
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
 	if (req.method === "POST") {
