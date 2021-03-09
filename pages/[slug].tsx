@@ -88,7 +88,7 @@ const Redirect: NextPage<Props> = (props) => {
 									password
 								).toString(CryptoEnc.Utf8);
 								if (!isURL(decryptedTarget)) {
-									setError(t("InvalidDestinationURL"));
+									setError(t("DecryptionFailed"));
 									return;
 								}
 								router.push(decryptedTarget);
