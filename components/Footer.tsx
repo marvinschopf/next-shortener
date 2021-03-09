@@ -41,7 +41,7 @@ const Footer: FunctionComponent<Props> = (props: Props) => {
 									? router.basePath
 									: router.basePath + "/";
 							router.push(
-								`/${event.target.value}${props.currentPath}`
+								`/${event.target.value}${router.asPath}`
 							);
 						}}
 					>
