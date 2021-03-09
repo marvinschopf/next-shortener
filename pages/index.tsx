@@ -17,6 +17,7 @@
  */
 
 import { NextPage } from "next";
+import { useRouter } from "next/router";
 import { Fragment, useState, useRef, MutableRefObject } from "react";
 
 import AES from "crypto-js/aes";
@@ -70,6 +71,8 @@ const Index: NextPage<Props> = ({
 	const [hcaptchaToken, setHcaptchaToken] = useState("");
 
 	const hcaptchaElement: MutableRefObject<HCaptcha> = useRef();
+
+	const router = useRouter();
 
 	return (
 		<Layout title="Next Shortener">
@@ -236,6 +239,9 @@ const Index: NextPage<Props> = ({
 					<HCaptcha
 						ref={hcaptchaElement}
 						sitekey={hcaptchaSiteKey}
+						languageOverride={
+							router.locale ? router.locale : "auto"
+						}
 						onVerify={(token: string) => {
 							setHcaptchaToken(token);
 						}}
