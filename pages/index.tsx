@@ -75,17 +75,17 @@ const Index: NextPage<Props> = ({
 		<Layout title="Next Shortener">
 			{error.length >= 1 && (
 				<Alert variant="danger">
-					<b>{t("error")}: </b> {error}
+					<b>{t("Error")}: </b> {error}
 				</Alert>
 			)}
 
 			{createdShortlink && (
 				<Alert variant="success">
 					<p>
-						<b>{t("created")}</b>
+						<b>{t("SuccessfullyCreated")}</b>
 					</p>
 					<Form.Group>
-						<Form.Label>{t("shortlink")}</Form.Label>
+						<Form.Label>{t("ShortLink")}</Form.Label>
 						<Row>
 							<Col xs={12} lg={11} md={8}>
 								<Form.Control
@@ -122,7 +122,7 @@ const Index: NextPage<Props> = ({
 					) {
 						if (!isURL(targetUrl)) {
 							setIsLoading(false);
-							setError("Please enter a valid URL.");
+							setError(t("EnterValidURL"));
 							return;
 						}
 						if (isEncrypted) {
@@ -155,9 +155,7 @@ const Index: NextPage<Props> = ({
 								}
 							} else {
 								setIsLoading(false);
-								setError(
-									"The encryption passwords do not match."
-								);
+								setError(t("PasswordsDontMatch"));
 							}
 						} else {
 							const response = await fetch("/api/create", {
@@ -177,15 +175,15 @@ const Index: NextPage<Props> = ({
 						}
 					} else {
 						setIsLoading(false);
-						setError("Please solve the captcha.");
+						setError(t("SolveCaptcha"));
 					}
 				}}
 			>
 				<Form.Group controlId="formBasicTarget">
-					<Form.Label>Target URL</Form.Label>
+					<Form.Label>{t("DestinationURL")}</Form.Label>
 					<Form.Control
 						type="text"
-						placeholder="Target URL"
+						placeholder={t("DestinationURL")}
 						onChange={(event) => {
 							setTargetUrl(event.target.value);
 							console.log(event.target.value);
@@ -201,7 +199,7 @@ const Index: NextPage<Props> = ({
 						}}
 						label={
 							<Fragment>
-								<FaLock /> Encrypted redirect
+								<FaLock /> {t("EncryptedRedirect")}
 							</Fragment>
 						}
 					/>
@@ -209,10 +207,10 @@ const Index: NextPage<Props> = ({
 				{isEncrypted && (
 					<Fragment>
 						<Form.Group>
-							<Form.Label>Password</Form.Label>
+							<Form.Label>{t("Password")}</Form.Label>
 							<Form.Control
 								type="password"
-								placeholder="Password"
+								placeholder={t("Password")}
 								required
 								onChange={(event) => {
 									setEncryptionPassword(event.target.value);
@@ -220,10 +218,10 @@ const Index: NextPage<Props> = ({
 							/>
 						</Form.Group>
 						<Form.Group>
-							<Form.Label>Verify Password</Form.Label>
+							<Form.Label>{t("VerifyPassword")}</Form.Label>
 							<Form.Control
 								type="password"
-								placeholder="Verify Password"
+								placeholder={t("VerifyPassword")}
 								required
 								onChange={(event) => {
 									setVerifyEncryptionPassword(
@@ -256,7 +254,7 @@ const Index: NextPage<Props> = ({
 					type="submit"
 					disabled={isLoading}
 				>
-					Save
+					{t("Save")}
 				</Button>
 			</Form>
 		</Layout>

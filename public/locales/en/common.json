@@ -1,5 +1,13 @@
 {
-	"error": "Error",
-	"shortlink": "Shortlink",
-	"created": "Successfully created!"
+	"Error": "Error",
+	"ShortLink": "Shortlink",
+	"SuccessfullyCreated": "Successfully created!",
+	"EnterValidURL": "Please enter a valid URL.",
+	"PasswordsDontMatch": "The passwords do not match.",
+	"SolveCaptcha": "Please solve the captcha.",
+	"DestinationURL": "Destination URL",
+	"EncryptedRedirect": "Encrypted redirect",
+	"Password": "Password",
+	"VerifyPassword": "Verify password",
+	"Save": "Save"
 }

@@ -1,5 +1,12 @@
 {
-	"error": "Fehler",
-	"shortlink": "Kurzlink",
-	"created": "Erfolgreich erstellt!"
+	"Error": "Fehler",
+	"ShortLink": "Kurzlink",
+	"SuccessfullyCreated": "Erfolgreich erstellt!",
+	"EnterValidURL": "Bitte gib eine gültige URL ein.",
+	"PasswordsDontMatch": "Die Passwörter stimmen nicht überein.",
+	"DestinationURL": "Ziel-URL",
+	"EncryptedRedirect": "Verschlüsselte Weiterleitung",
+	"Password": "Passwort",
+	"VerifyPassword": "Passwort bestätigen.",
+	"Save": "Speichern"
 }
