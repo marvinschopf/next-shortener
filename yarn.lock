@@ -1430,10 +1430,10 @@ needle@^2.5.2:
     iconv-lite "^0.4.4"
     sax "^1.2.4"
 
-next-i18next@8.1.0:
-  version "8.1.0"
-  resolved "https://registry.yarnpkg.com/next-i18next/-/next-i18next-8.1.0.tgz#40dae8093adb0a412914dce9af2f33b6169d5afb"
-  integrity sha512-IagAZumU+SVDKRQCuiNONznRe5qz92Ic1SslH6+NL9FEMLjeVI/Mv5hMB8RJlqFyyR/Cl187gbsV7UQxGyrtTg==
+next-i18next@8.1.1:
+  version "8.1.1"
+  resolved "https://registry.yarnpkg.com/next-i18next/-/next-i18next-8.1.1.tgz#ba53bfd6c33b7dcd798a9942a50ddd85c489d95f"
+  integrity sha512-B/AHX/JV8GJBVYBrtjr//wJQN2JnCVMD7HTUnwNlxJPeNnO5qtSJT7q8jBtZVeJnp5htZXw9Aq3PEsh3eAe8EQ==
   dependencies:
     "@types/hoist-non-react-statics" "^3.3.1"
     "@types/i18next-fs-backend" "^1.0.0"
