@@ -10,7 +10,7 @@
 		"style:fix": "prettier --write **/*.tsx **/*.ts **/*.js **/*.json **/*.yml **/*.md **/**/*.tsx **/**/*.js public/locales/**/*.json *.js *.ts"
 	},
 	"dependencies": {
-		"@hcaptcha/react-hcaptcha": "0.3.4",
+		"@hcaptcha/react-hcaptcha": "0.3.6",
 		"argon2": "0.27.1",
 		"bootstrap": "4.6.0",
 		"crypto-js": "4.0.0",
